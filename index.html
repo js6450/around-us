@@ -1,0 +1,501 @@
+<html>
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta http-equiv="Cache-Control" content="no-cache">
+      <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+      <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/p5.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/addons/p5.dom.min.js"></script>      <script src=""></script>
+      <title>Satellites</title>
+
+    </head>
+    <style>
+
+      body{
+        margin: 0;
+        overflow: hidden;
+        font-family: 'Ubuntu', sans-serif;
+      }
+
+      #timeline{
+          position: fixed;
+          color: white;
+          margin-left: 64gpx;
+      }
+
+      #info{
+          position: fixed;
+          color: white;
+          top: 40vh;
+          left: 20vw;
+      }
+
+      #year{
+          font-size: 36px;
+      }
+
+      #year-div{
+          margin-bottom: 18px;
+          margin-left: 14px;
+      }
+
+      #civil-block, #gov-block, #com-block, #mil-block, #unknown-block{
+          width: 18px;
+          height: 5px;
+          display: inline-block;
+          margin-bottom: 3px;
+          margin-right: 8px;
+          margin-left: 8px;
+      }
+
+      #civil, #gov, #com, #mil, #unknown{
+          width: 30px;
+          display: inline-block;
+          text-align: right;
+
+          margin-bottom: 6px;
+          margin-top: 0;
+      }
+
+      #civil-block{
+          background: rgb(247, 194, 66);
+      }
+
+      #gov-block{
+          background: rgb(224, 60, 138);
+      }
+
+      #com-block{
+          background: rgb(88, 178, 220);
+      }
+
+      #mil-block{
+          background: rgb(144, 180, 75);
+      }
+
+      #unknown-block{
+          background: rgb(255, 255, 255);
+      }
+
+      /*#card{*/
+        /*width: 26vw;*/
+        /*height: 100vh;*/
+        /*background: #0B1013;*/
+        /*position: absolute;*/
+        /*top: 0;*/
+        /*right: 0;*/
+      /*}*/
+
+      /*#card-img{*/
+        /*margin: auto;*/
+        /*display: block;*/
+        /*margin-top: 96px;*/
+      /*}*/
+
+      /*#info{*/
+        /*color: white;*/
+        /*position: absolute;*/
+        /*bottom: 0;*/
+        /*margin: 0px 24px;*/
+        /*margin-bottom: 48px;*/
+      /*}*/
+
+      /*#title{*/
+        /*text-align: center;*/
+      /*}*/
+
+      /*a{*/
+        /*color: white;*/
+      /*}*/
+    </style>
+    <body>
+      <div id="timeline"></div>
+      <div id="info">
+          <div id="year-div"><span id="year">1974</span></div>
+          <div id="civil-div">
+              <p id="civil">0</p><div id="civil-block"></div><span>Civil</span>
+          </div>
+          <div id="gov-div">
+              <p id="gov">0</p><div id="gov-block"></div><span>Government</span>
+          </div>
+          <div id="com-div">
+              <p id="com">0</p><div id="com-block"></div><span>Commercial</span>
+          </div>
+          <div id="mil-div">
+              <p id="mil">0</p><div id="mil-block"></div><span>Military</span>
+          </div>
+          <div id="unknown-div">
+              <p id="unknown">0</p><div id="unknown-block"></div><span>????????</span>
+          </div>      </div>
+      <canvas id="webgl"></canvas>
+      <!--<div id=card>-->
+        <!--<img width="60%" height="auto" id="card-img" src="data/img/cover.png">-->
+        <!--<div id=info>-->
+            <!--<h1 id="title">ABOVE US</h1>-->
+            <!--<div id="hidden-info">-->
+              <!--<p>In spirit Lisa Park’s <i>Stuff You Can Kick: Toward a Theory of Media Infrastructures</i>, this piece investigates the infrastructure of satellites. Satellites have become one of the most essential infrastructures that make distribution of media possible and like most media infrastructures, the extent of the structure is hard to be visually represented in one glance and no human can physically see the whole infrastructure. To add to this difficulty of visualizing infrastructures, satellites, once launched to the Earth’s orbit, are no longer visible to the human eye.-->
+              <!--</p>-->
+              <!--<p>Data from <a target="_blank" href="https://www.ucsusa.org/resources/satellite-database">Union of Concerned Scientists</a>.</p>-->
+            <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+      <script src="js/three.min.js"></script>
+      <script src="js/three.interaction.js"></script>
+      <script src="js/OrbitControls.js"></script>
+      <script src="js/Detector.js"></script>
+      <script src="js/ImprovedNoise.js"></script>
+      <script src="js/Particle.js"></script>
+      <script>
+
+        let satdata = [];
+        let satHeader = [];
+
+        let satYears = [];
+        let satYearCount = [];
+
+        let textHeight;
+        let squareWidth;
+
+        function setup(){
+            loadTable('data/sat.csv', parseData);
+            noCanvas();
+        }
+
+        function parseData(dat){
+
+            for(let i = 0; i < dat.rows[0].arr.length; i++){
+                if(dat.rows[0].arr[i] !== ""){
+                    satHeader.push(dat.rows[0].arr[i]);
+                }
+            }
+
+            for(let i = 1; i < dat.rows.length; i++){
+                let currentSat = [];
+
+                if(dat.rows[i].arr[18] !== ""){
+                    let date = dat.rows[i].arr[18].split("/");
+
+                    let year = parseInt(date[2]);
+
+                    if(year > 20){
+                        year += 1900;
+                    }else{
+                        year += 2000;
+                    }
+
+                    let month = parseInt(date[0]) - 1;
+                    let day = parseInt(date[1]);
+
+                    currentSat.push(new Date(year, month, day).getTime());
+                    currentSat.push(year);
+                    currentSat.push(month);
+                    currentSat.push(day);
+                }
+
+                for(let j = 0; j < dat.rows[i].arr.length; j++){
+                    currentSat.push(dat.rows[i].arr[j]);
+                }
+
+                satdata.push(currentSat);
+            }
+
+            satdata.sort(Comparator);
+
+            for(let i = 0; i < satdata.length; i++){
+                if(satYears.indexOf(satdata[i][1]) < 0){
+                    satYears.push(satdata[i][1]);
+                    satYearCount.push(0);
+                }
+
+                satYearCount[satYears.indexOf(satdata[i][1])]++;
+
+            }
+
+            textHeight = HEIGHT / (satYears.length * 2);
+
+            for(let i = 0; i < satYears.length; i++){
+                let newDiv = document.createElement('div');
+                newDiv.id = satYears[i];
+
+                let newP = document.createElement('span');
+                newP.innerHTML = satYears[i];
+
+                newP.style.fontSize = textHeight + "px";
+                newDiv.style.marginTop = textHeight / 2 + "px";
+                newDiv.style.marginBottom = textHeight / 2 + "px";
+
+                let triangle = document.createElement('span');
+                triangle.innerHTML = "▸";
+                triangle.style.marginRight = "5px";
+                triangle.style.marginLeft = "3px";
+
+                if(i != 0){
+                    triangle.style.visibility = "hidden";
+                }else{
+                    triangle.style.visibility = "visible";
+                }
+
+                newDiv.appendChild(newP);
+                newDiv.appendChild(triangle);
+                document.getElementById('timeline').appendChild(newDiv);
+
+            }
+
+            let timeHeight = parseFloat(window.getComputedStyle(document.getElementById('timeline')).height);
+
+            let margin = (HEIGHT - timeHeight) / 2;
+            document.getElementById('timeline').style.marginTop = margin + "px";
+
+            squareWidth = (WIDTH * 3 / 4) / 400;
+        }
+
+        function Comparator(a, b) {
+            if (a[0] < b[0]) return -1;
+            if (a[0] > b[0]) return 1;
+            return 0;
+        }
+
+        let satIndex = 0;
+
+        let catCount = [0, 0, 0, 0, 0];
+
+        let timer = setInterval(function(){
+
+            let currentYear = satdata[satIndex][1];
+            document.getElementById('year').innerHTML = currentYear;
+
+            if(document.getElementById(currentYear).children[1].style.visibility !== "visible"){
+                let times = document.getElementById('timeline').children;
+
+                for(let i = 0; i < times.length; i++){
+                    times[i].children[1].style.visibility = "hidden";
+                }
+
+                document.getElementById(currentYear).children[1].style.visibility = "visible";
+            }
+
+            let yearIndex = satYears.indexOf(currentYear);
+            let satY = 100 / 33 * yearIndex;
+
+            let categories = satdata[satIndex][8].split('/');
+
+            for(let i = 0; i < categories.length; i++){
+                let square = document.createElement('div');
+                square.style.width = squareWidth + "px";
+                square.style.height = textHeight + "px";
+                square.style.display = "inline-block";
+
+                if(categories[i] === "Civil"){
+                    square.style.background = "rgba(247, 194, 66, 0.8)";
+                    catCount[0]++;
+                }else if(categories[i] === "Government"){
+                    square.style.background = "rgba(224, 60, 138, 0.8)";
+                    catCount[1]++;
+                }else if(categories[i] === "Commercial"){
+                    square.style.background = "rgba(88, 178, 220, 0.8)";
+                    catCount[2]++;
+                }else if(categories[i] === "Military"){
+                    square.style.background = "rgba(144, 180, 75, 0.8)";
+                    catCount[3]++;
+                }else{
+                    square.style.background = "rgba(255, 255, 255, 0.8)";
+                }
+                document.getElementById(currentYear).appendChild(square);
+
+                createSat(-50, 50 - satY, 0, frameCount);
+            }
+
+
+
+            if(Math.random() < 0.2){
+                let square = document.createElement('div');
+                square.style.width = squareWidth + "px";
+                square.style.height = textHeight + "px";
+                square.style.display = "inline-block";
+                square.style.background = "rgba(255, 255, 255, 0.8)";
+
+                document.getElementById(currentYear).appendChild(square);
+
+                catCount[4]++;
+
+                createSat(-50, 50 - satY, 0, frameCount);
+            }
+
+
+            document.getElementById('civil').innerHTML = catCount[0];
+            document.getElementById('gov').innerHTML = catCount[1];
+            document.getElementById('com').innerHTML = catCount[2];
+            document.getElementById('mil').innerHTML = catCount[3];
+            document.getElementById('unknown').innerHTML = catCount[4];
+
+            satIndex++;
+
+            if(satIndex > satdata.length - 1){
+                clearInterval(timer);
+                console.log("done");
+            }
+
+
+        }, 500);
+
+        if (!Detector.webgl) Detector.addGetWebGLMessage();
+
+        let selected = -1;
+
+        let perlin = new ImprovedNoise();
+
+        window.addEventListener('resize', onWindowResize, false);
+
+        THREE.Object3D.prototype.rotateAroundWorldAxis = function() {
+            var q1 = new THREE.Quaternion();
+            return function ( point, axis, angle ) {
+                q1.setFromAxisAngle( axis, angle );
+                this.quaternion.multiplyQuaternions( q1, this.quaternion );
+                this.position.sub( point );
+                this.position.applyQuaternion( q1 );
+                this.position.add( point );
+                return this;
+            }
+        }();
+
+        let WIDTH = window.innerWidth;
+        let HEIGHT = window.innerHeight;
+        let camera = new THREE.PerspectiveCamera(60, WIDTH / HEIGHT, 0.01, 1500);
+        camera.position.z = 120;
+        camera.position.x = 10;
+
+        let renderer = new THREE.WebGLRenderer({
+          canvas: document.querySelector('#webgl'),
+          antialias: true,
+        });
+
+        let sats = [];
+        let particles = [];
+
+        renderer.setClearColor(0x0B101300);
+        renderer.setSize(WIDTH, HEIGHT);
+
+        let controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+        let scene = new THREE.Scene();
+        let interaction = new THREE.Interaction(renderer, scene, camera);
+
+        let earthMaterial = new THREE.MeshPhongMaterial();
+        earthMaterial.map = THREE.ImageUtils.loadTexture('data/img/earthmap.jpg');
+
+        let earth = new THREE.Mesh(
+            new THREE.SphereGeometry(35, 32, 32),
+            earthMaterial
+        );
+
+        earth.position.x = 40;
+
+       scene.add(earth);
+
+        function createSat(x, y, z, frame){
+            particles.push(new Particle(x, y, z));
+
+            let cube = new THREE.Mesh(
+                new THREE.BoxGeometry(0.5, 0.5, 0.5),
+                new THREE.MeshPhongMaterial({ color: 0xffffff })
+            );
+            cube.cursor = 'pointer';
+
+            cube.position.x = x;
+            cube.position.y = y;
+            cube.position.z = z;
+
+            cube.xOffset = THREE.Math.randFloat(0.001, 0.005);
+            cube.yOffset = THREE.Math.randFloat(0.001, 0.005);
+
+            cube.startFrame = frame;
+            cube.endTransition = false;
+            cube.alpha = 0;
+
+            cube.name = 'sat-' + sats.length;
+
+            sats.push(cube);
+            scene.add(sats[sats.length - 1]);
+
+            sats[sats.length - 1].on('mousedown', function(ev) {
+                sats[sats.length - 1].material.color.r = 0;
+                // selected = index;
+                // console.log(selected);
+                //document.getElementById('card-img').src = "data/img/" + selected + ".png";
+            });
+
+            sats[sats.length - 1].on('mouseup', function(ev) {
+                sats[sats.length - 1].material.color.r = 1;
+            });
+        }
+        
+        let ambient = new THREE.AmbientLight( 0x666666 );
+        scene.add( ambient );
+
+        let light = new THREE.PointLight(0xffffff);
+        light.position.set(20, 50, 10);
+        scene.add(light);
+
+        let frameCount = 0;
+
+        let clock = new THREE.Clock(true);
+
+        function render() {
+
+            earth.rotation.y = frameCount * 0.001;
+
+            for (let i = 0; i < particles.length; i++) {
+                let p = particles[i];
+
+                let x = 40 * Math.cos((frameCount - sats[i].startFrame) * sats[i].xOffset) * Math.sin((frameCount - sats[i].startFrame) * sats[i].yOffset) + 40;
+                let y = 40 * Math.sin((frameCount - sats[i].startFrame) * sats[i].xOffset) * Math.sin((frameCount - sats[i].startFrame) * sats[i].yOffset);
+                let z = 40 * Math.cos((frameCount - sats[i].startFrame) * sats[i].yOffset);
+
+                p.pos = new THREE.Vector3(x, y, z);
+            }
+
+            let delta = clock.getDelta();
+
+            let currentX, currentY, currentZ;
+
+        	for(let i = 0; i < sats.length; i++){
+
+                if(!sats[i].endTransition){
+        	        currentX = Math.abs(particles[i].pos.x - sats[i].position.x);
+        	        currentY = Math.abs(particles[i].pos.y - sats[i].position.y);
+        	        currentZ = Math.abs(particles[i].pos.z - sats[i].position.z);
+                }
+                else{
+                    sats[i].position.x = particles[i].pos.x;
+                    sats[i].position.y = particles[i].pos.y;
+                    sats[i].position.z = particles[i].pos.z;
+                }
+
+                if (currentX >= 0.1 || currentY >= 0.1 || currentZ >= 0.1) {
+                    sats[i].alpha += delta * 3;
+                    sats[i].position.lerp(particles[i].pos, sats[i].alpha);
+                } else {
+                    sats[i].endTransition = true;
+                }
+        	}
+          
+          renderer.render(scene, camera);
+          requestAnimationFrame(render);
+          frameCount++;
+        }
+        render();
+
+        function onWindowResize() {
+          camera.aspect = (window.innerWidth) / window.innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+
+
+      </script>
+
+    </body>
+
+    </html>
+
