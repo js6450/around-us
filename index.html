@@ -6,7 +6,7 @@
       <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
       <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/p5.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/addons/p5.dom.min.js"></script>      <script src=""></script>
-      <title>Satellites</title>
+      <title>Around Us</title>
 
     </head>
     <style>
@@ -15,18 +15,18 @@
         margin: 0;
         overflow: hidden;
         font-family: 'Ubuntu', sans-serif;
-        background: linear-gradient(to right,  #000000, #ffffff, #000000); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-        background-size: 300% 100%;
-        background-position: 125%;
+        /*background: linear-gradient(to right,  #000000, #ffffff, #000000); !* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ *!*/
+        /*background-size: 300% 100%;*/
+        /*background-position: 125%;*/
         /*background-position: 105%;*/
           /*background-position: 145%;*/
-
-
+        background: black;
+          font-family: 'Helvetica Neue', sans-serif;
       }
 
       #timeline{
           position: fixed;
-          color: black;
+          color: white;
           margin-left: 64px;
 
       }
@@ -35,7 +35,7 @@
           position: fixed;
           color: white;
           top: 40vh;
-          left: 20vw;
+          left: 25vw;
       }
 
       #year{
@@ -226,9 +226,10 @@
         <img width="60%" height="auto" id="card-img" src="data/img/cover.png">
       </div>
       <div id="info-panel">
-          <p>How was your day?  Did you check the weather when you woke up?  You have a plan to go to a new restaurant, but you don't know how to get there.<br>What allows you to check the weather and find directions to a place?</p>
-          <p>In spirit Lisa Park’s <i>Stuff You Can Kick: Toward a Theory of Media Infrastructures</i>, we are investigating the infrastructure of satellites launched in the year 2018 - 19. Satellites have become one of the most essential infrastructures that make distribution of media possible and like most media infrastructures, the extent of the structure is hard to be visually represented in one glance and no human can physically see the whole infrastructure. To add to this difficulty of visualizing infrastructures, satellites, once launched to the Earth’s orbit, are no longer visible to the human eye. Around Us raises awareness of these satellites that comprise an important infrastructure to digital media communications and also what and how “actual” numbers of something flying around the earth.
-          </p>
+          <p>How was your day?  Did you check the weather when you woke up?  You have a plan to go to a new restaurant, but you don't know how to get there.<br><br><i>What allows you to check the weather and find directions to a place?</i></p>
+          <p>In spirit Lisa Park’s <i>Stuff You Can Kick: Toward a Theory of Media Infrastructures</i>, we are investigating the infrastructure of satellites launched in the year 2018 - 19. Satellites have become one of the most essential infrastructures that make distribution of media possible and like most media infrastructures, the extent of the structure is hard to be visually represented in one glance and no human can physically see the whole infrastructure. To add to this difficulty of visualizing infrastructures, satellites, once launched to the Earth’s orbit, are no longer visible to the human eye. Around Us raises awareness of these satellites that comprise an important infrastructure of digital media communications. This project also questions whether we have the full information about the number of satellites orbiting the Earth and what the use of those that are not public knowledge may be.</p>
+          <p>Around Us is a project by <a target="_blank" href="https://expandingexperience.kr/">Jaekook Han</a> and <a target="_blank" href="http://jiwonshin.com/">Jiwon Shin</a>.</p>
+          <p>Data from <a target="_blank" href="https://www.ucsusa.org/resources/satellite-database">Union of Concerned Scientists</a> and visualization created with <a target="_blank" href="https://threejs.org/">Three.js</a>.</p>
       </div>
       <script src="js/three.min.js"></script>
       <script src="js/three.interaction.js"></script>
@@ -348,8 +349,9 @@
 
             let margin = (HEIGHT - timeHeight) / 2;
             document.getElementById('timeline').style.marginTop = margin + "px";
+            // document.getElementsByClassName('info')[0].style.marginTop = margin + "px";
 
-            squareWidth = (WIDTH * 3 / 4) / 400;
+            squareWidth = (WIDTH / 2) / 400;
         }
 
         function Comparator(a, b) {
@@ -444,13 +446,13 @@
                         homeTransDone = true;
                     }
 
-                    if(yearsBgPos < 125){
-                        yearsBgPos += 0.5;
-                        document.body.style.backgroundPosition = yearsBgPos + "%";
-                        homeTransDone = false;
-                    }else{
-                        homeTransDone = true;
-                    }
+                    // if(yearsBgPos < 125){
+                    //     yearsBgPos += 0.5;
+                    //     document.body.style.backgroundPosition = yearsBgPos + "%";
+                    //     homeTransDone = false;
+                    // }else{
+                    //     homeTransDone = true;
+                    // }
                 }else if(mode === 1){
                     if(camera.position.x < 0){
                         camera.position.x += 1;
@@ -472,13 +474,13 @@
                         homeTransDone = true;
                     }
 
-                    if(yearsBgPos > 125){
-                        yearsBgPos -= 0.5;
-                        document.body.style.backgroundPosition = yearsBgPos + "%";
-                        homeTransDone = false;
-                    }else{
-                        homeTransDone = true;
-                    }
+                    // if(yearsBgPos > 125){
+                    //     yearsBgPos -= 0.5;
+                    //     document.body.style.backgroundPosition = yearsBgPos + "%";
+                    //     homeTransDone = false;
+                    // }else{
+                    //     homeTransDone = true;
+                    // }
                 }
 
 
@@ -561,13 +563,13 @@
                         homeTransDone = true;
                     }
 
-                    if(yearsBgPos < 125){
-                        yearsBgPos += 0.5;
-                        document.body.style.backgroundPosition = yearsBgPos + "%";
-                        homeTransDone = false;
-                    }else{
-                        homeTransDone = true;
-                    }
+                    // if(yearsBgPos < 125){
+                    //     yearsBgPos += 0.5;
+                    //     document.body.style.backgroundPosition = yearsBgPos + "%";
+                    //     homeTransDone = false;
+                    // }else{
+                    //     homeTransDone = true;
+                    // }
                 }else if(mode === 1){
                     if(camera.position.x < 0){
                         camera.position.x += 1;
@@ -589,13 +591,13 @@
                         homeTransDone = true;
                     }
 
-                    if(yearsBgPos > 125){
-                        yearsBgPos -= 0.5;
-                        document.body.style.backgroundPosition = yearsBgPos + "%";
-                        homeTransDone = false;
-                    }else{
-                        homeTransDone = true;
-                    }
+                    // if(yearsBgPos > 125){
+                    //     yearsBgPos -= 0.5;
+                    //     document.body.style.backgroundPosition = yearsBgPos + "%";
+                    //     homeTransDone = false;
+                    // }else{
+                    //     homeTransDone = true;
+                    // }
                 }
 
                 if(homeTransDone){
@@ -668,6 +670,17 @@
             let yearsTrans = setInterval(function(){
 
 
+                if(infoOpacity > 0){
+                    infoOpacity -= 0.1;
+                    document.getElementById('info-panel').style.opacity = infoOpacity;
+
+                    cardsTransDone = false;
+                }else{
+                    cardsTransDone = true;
+                    document.getElementById('info-panel').style.top = "100vh";
+
+                }
+
                 if(yearsAlpha > 0){
                     yearsAlpha -= 0.1;
                     document.getElementById('by-years').style.opacity = yearsAlpha;
@@ -697,25 +710,16 @@
                     cardsTransDone = true;
                 }
 
-                if(infoOpacity > 0){
-                    infoOpacity -= 0.1;
-                    document.getElementById('info-panel').style.opacity = infoOpacity;
-
-                    cardsTransDone = false;
-                }else{
-                    cardsTransDone = true;
-                    document.getElementById('info-panel').style.top = "100vh";
-
-                }
 
 
-                if(yearsBgPos < 145){
-                    yearsBgPos += 0.5;
-                    document.body.style.backgroundPosition = yearsBgPos + "%";
-                    cardsTransDone = false;
-                }else{
-                    cardsTransDone = true;
-                }
+
+                // if(yearsBgPos < 145){
+                //     yearsBgPos += 0.5;
+                //     document.body.style.backgroundPosition = yearsBgPos + "%";
+                //     cardsTransDone = false;
+                // }else{
+                //     cardsTransDone = true;
+                // }
 
 
 
@@ -731,7 +735,7 @@
                     let clickSatIndex = 0;
 
                     addSat = setInterval(function(){
-                        createSat(clickSatIndex, Math.random() * -100, Math.random() * 100 - 50, 0, frameCount, true);
+                        createSat(clickSatIndex, Math.random() * -100, Math.random() * 100 - 50, 0, 0xffffff ,frameCount, true);
 
                         clickSatIndex++;
                         if(clickSatIndex > 418){
@@ -780,11 +784,11 @@
 
                 yearsAlpha += 0.01;
                 document.getElementById('by-years').style.opacity = yearsAlpha;
-
-                if(yearsBgPos > 105){
-                    yearsBgPos -= 0.5;
-                }
-                document.body.style.backgroundPosition = yearsBgPos + "%";
+                //
+                // if(yearsBgPos > 105){
+                //     yearsBgPos -= 0.5;
+                // }
+                // document.body.style.backgroundPosition = yearsBgPos + "%";
 
                 if(infoOpacity > 0){
                     infoOpacity -= 0.1;
@@ -850,24 +854,30 @@
                             square.style.display = "inline-block";
                             square.className = "counter";
 
+                            let colHex = 0;
+
                             if(categories[i] === "Civil"){
                                 square.style.background = "rgba(247, 194, 66, 0.8)";
+                                colHex = 0xf7c242;
                                 catCount[0]++;
                             }else if(categories[i] === "Government"){
                                 square.style.background = "rgba(224, 60, 138, 0.8)";
+                                colHex = 0xe03c8a;
                                 catCount[1]++;
                             }else if(categories[i] === "Commercial"){
                                 square.style.background = "rgba(88, 178, 220, 0.8)";
+                                colHex = 0x58b2dc;
                                 catCount[2]++;
                             }else if(categories[i] === "Military"){
                                 square.style.background = "rgba(144, 180, 75, 0.8)";
+                                colHex = 0x8fb54c;
                                 catCount[3]++;
                             }else{
                                 square.style.background = "rgba(255, 255, 255, 0.8)";
                             }
                             document.getElementById(currentYear).appendChild(square);
 
-                            createSat(sats.length - 1, -80, 50 - satY, 0, frameCount, false);
+                            createSat(sats.length - 1, -80, 50 - satY, 0, colHex, frameCount, false);
                         }
 
                         if(Math.random() < 0.2){
@@ -881,7 +891,7 @@
 
                             catCount[4]++;
 
-                            createSat(sats.length - 1, -80, 50 - satY, 0, frameCount, false);
+                            createSat(sats.length - 1, -80, 50 - satY, 0, 0xffffff, frameCount, false);
                         }
 
 
@@ -899,7 +909,7 @@
                         }
 
 
-                    }, 500);
+                    }, 100);
                 }
 
             }, 10);
@@ -909,6 +919,7 @@
 
         if (!Detector.webgl) Detector.addGetWebGLMessage();
 
+        //reset selected
         let selected = -1;
 
         let perlin = new ImprovedNoise();
@@ -945,13 +956,12 @@
         renderer.autoClear = false;
         renderer.setClearColor(0x000000, 0.0);
 
-
         let controls = new THREE.OrbitControls(camera, renderer.domElement);
         controls.enableRotate = false;
 
         let scene = new THREE.Scene();
         let interaction = new THREE.Interaction(renderer, scene, camera);
-        // scene.fog = new THREE.Fog(0x000000, 0, 500);
+        scene.fog = new THREE.Fog(0x000000, 0, 400);
 
         let earthMaterial = new THREE.MeshPhongMaterial({});
         earthMaterial.map = THREE.ImageUtils.loadTexture('data/img/earthmap.jpg');
@@ -987,18 +997,22 @@
         // let hemlight = new THREE.HemisphereLight( 0xffffff, 0x000000, 1 );
         // scene.add( hemlight );
 
-        function createSat(i, x, y, z, frame, addClick){
+        function createSat(i, x, y, z, c, frame, addClick){
             particles.push(new Particle(x, y, z));
 
-            let bsize = 0.5;
+            let bsize = THREE.Math.randFloat(0.1, 0.3);
 
             if(addClick){
-                bsize = 1.5;
+                bsize = 1;
             }
 
             let cube = new THREE.Mesh(
-                new THREE.BoxGeometry(bsize, bsize, bsize),
-                new THREE.MeshPhongMaterial({ color: 0xffffff })
+                new THREE.SphereGeometry(bsize, 18, 18),
+                new THREE.MeshPhongMaterial({
+                    color: c,
+                    transparent: true,
+                    opacity: 0.9
+                })
             );
             cube.cursor = 'pointer';
 
@@ -1033,13 +1047,13 @@
 
         }
         
-        let ambient = new THREE.AmbientLight( 0x666666 );
+        let ambient = new THREE.AmbientLight( 0xdddddd );
         scene.add( ambient );
 
-        let light = new THREE.PointLight(0xffffff);
-        light.position.set(20, 50, 50);
-        scene.add(light);
-
+        // let light = new THREE.PointLight(0xffffff);
+        // light.position.set(20, 50, 50);
+        // scene.add(light);
+        //
         // var lights = [];
         // lights[0] = new THREE.DirectionalLight( 0xffffff, 1 );
         // lights[0].position.set( 1, 0, 0 );
@@ -1064,9 +1078,9 @@
             for (let i = 0; i < particles.length; i++) {
                 let p = particles[i];
 
-                let x = 40 * Math.cos((frameCount - sats[i].startFrame) * sats[i].xOffset) * Math.sin((frameCount - sats[i].startFrame) * sats[i].yOffset) + xorigin;
-                let y = 40 * Math.sin((frameCount - sats[i].startFrame) * sats[i].xOffset) * Math.sin((frameCount - sats[i].startFrame) * sats[i].yOffset);
-                let z = 40 * Math.cos((frameCount - sats[i].startFrame) * sats[i].yOffset);
+                let x = 40 * Math.cos((frameCount) * sats[i].xOffset) * Math.sin((frameCount) * sats[i].yOffset) + xorigin;
+                let y = 40 * Math.sin((frameCount) * sats[i].xOffset) * Math.sin((frameCount) * sats[i].yOffset);
+                let z = 40 * Math.cos((frameCount) * sats[i].yOffset);
 
                 p.pos = new THREE.Vector3(x, y, z);
             }

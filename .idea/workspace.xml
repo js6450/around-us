@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b745aea8-3ce9-4c42-8183-57e9219ef23a" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -19,8 +20,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="423" column="17" selection-start-line="423" selection-start-column="17" selection-end-line="423" selection-end-column="17" />
+            <state relative-caret-position="438">
+              <caret line="351" column="76" selection-start-line="351" selection-start-column="76" selection-end-line="351" selection-end-column="76" />
             </state>
           </provider>
         </entry>
@@ -57,11 +58,9 @@
       <find>let p \= particles\[i\]\;\n</find>
       <find>Particle</find>
       <find>inline-block</find>
-      <find>applyNoise</find>
       <find>camera</find>
       <find>light</find>
       <find>fog</find>
-      <find>createSat</find>
       <find>square</find>
       <find>earsbgPos</find>
       <find>yoffset</find>
@@ -69,6 +68,15 @@
       <find>controls</find>
       <find>info-panel</find>
       <find>years</find>
+      <find>selected</find>
+      <find>applyNoise</find>
+      <find>earth</find>
+      <find>opacity</find>
+      <find>year</find>
+      <find>timeline</find>
+      <find>info</find>
+      <find>xorigin</find>
+      <find>createSat</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -96,9 +104,9 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="767" />
+    <option name="x" value="674" />
     <option name="y" value="23" />
-    <option name="width" value="913" />
+    <option name="width" value="1006" />
     <option name="height" value="1027" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -132,6 +140,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///Users/jiwon/Desktop/satellite-cards/web/.gitignore" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -158,15 +167,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1575922762878</updated>
-      <workItem from="1575922764151" duration="35040000" />
+      <workItem from="1575922764151" duration="40788000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35040000" />
+    <option name="totallyTimeSpent" value="40788000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="767" y="23" width="913" height="1027" extended-state="0" />
+    <frame x="674" y="23" width="1006" height="1027" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49892473" weight="0.24824561" />
@@ -177,7 +186,7 @@
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" />
       <window_info id="Structure" order="1" sideWeight="0.50107527" side_tool="true" weight="0.24824561" />
-      <window_info active="true" anchor="bottom" id="Terminal" visible="true" weight="0.19139785" />
+      <window_info anchor="bottom" id="Terminal" weight="0.19139785" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -196,7 +205,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="2" />
+      <option name="time" value="3" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -216,8 +225,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="423" column="17" selection-start-line="423" selection-start-column="17" selection-end-line="423" selection-end-column="17" />
+        <state relative-caret-position="438">
+          <caret line="351" column="76" selection-start-line="351" selection-start-column="76" selection-end-line="351" selection-end-column="76" />
         </state>
       </provider>
     </entry>
