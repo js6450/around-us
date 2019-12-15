@@ -100,11 +100,16 @@
           opacity: 0;
       }
 
+      #cards-btn, #by-year-btn, #home-btn, #info-btn{
+          z-index: 1;
+      }
+
+
       #by-year-btn{
           transform: rotateZ(90deg);
           transform-origin: left;
           position: fixed;
-          right: -68px;
+          right: -56px;
           background-color: transparent;
           color: white;
           top: calc(50vh - 45px);
@@ -115,7 +120,7 @@
           transform: rotateZ(-90deg);
           transform-origin: right;
           position: fixed;
-          left: -68px;
+          left: -63px;
           background-color: transparent;
           color: white;
           top: calc(50vh - 45px);
@@ -127,7 +132,7 @@
           right: calc(50vw - 45px);
           background-color: transparent;
           color: white;
-          top: 18px;
+          top: 16px;
           transition: background-color 1s, color 1s;
       }
 
@@ -139,7 +144,7 @@
           right: calc(50vw - 45px);
           background-color: transparent;
           color: white;
-          bottom: 18px;
+          bottom: 16px;
           transition: background-color 1s, color 1s;
       }
 
@@ -154,7 +159,37 @@
           color: black;
       }
 
+      #top-line, #bottom-line, #right-line, #left-line{
+          position: fixed;
+          z-index: 1;
+          background: white;
+      }
 
+      #right-line, #left-line{
+          height: 100vh;
+          width: 1px;
+      }
+
+      #top-line, #bottom-line{
+          width: 100vw;
+          height: 1px;
+      }
+
+      #right-line{
+          right: 48px;
+      }
+
+      #left-line{
+          left: 48px;
+      }
+
+      #top-line{
+        top: 48px;
+      }
+
+      #bottom-line{
+        bottom: 48px;
+      }
 
       #info-panel{
           width: 40vw;
@@ -168,7 +203,12 @@
           opacity: 0;
       }
 
-
+      #map-cvs{
+          position: fixed;
+          top: 100vh;
+          left: 0;
+          opacity: 0;
+      }
 
       #card{
         width: 35vw;
@@ -178,6 +218,42 @@
         top: 0;
         right: 84px;
           display: none;
+      }
+
+      #map-info{
+          opacity: 0;
+      }
+
+      #map-index{
+          color: white;
+          position: fixed;
+          bottom: -56vh;
+          transform: rotate(-90deg);
+          left: 48vw;
+      }
+
+      #map-num{
+          color: white;
+          position: fixed;
+          bottom: -63vh;
+          transform: rotate(-90deg);
+          left: 49vw;
+      }
+
+      #map-div{
+          position: fixed;
+          background: white;
+          width: 1px;
+          height: 80vw;
+          bottom: -34.1vw;
+          transform: rotate(-90deg);
+          left: 86.5vh;
+      }
+
+      .map-list{
+          transform: rotate(45deg);
+          margin-bottom: 6px;
+          font-size: 12px;
       }
 
       #card-img{
@@ -215,12 +291,16 @@
       </div>
       <!--<div id="title-div"><span id="title">Around Us</span></div>-->
       <div id="menu">
-          <div onclick="satByYears()" id="by-year-btn"><span id="by-year-btn-span">AROUND US</span></div>
-          <div onclick="viewCards()" id="cards-btn"><span id="cards-btn-span">AROUND US</span></div>
-          <div onclick="home()" id="home-btn"><span id="home-span">AROUND US</span></div>
-          <div onclick="info()" id="info-btn"><span id="info-btn-span">AROUND US</span></div>
-      </div>
+          <div onclick="satByYears()" id="by-year-btn"><span id="by-year-btn-span">TIMELINE</span></div>
+          <div onclick="viewCards()" id="cards-btn"><span id="cards-btn-span">SATELLITE</span></div>
+          <div onclick="info()" id="home-btn"><span id="home-span">AROUND US</span></div>
+          <div onclick="showmap()" id="info-btn"><span id="info-btn-span">WORLD MAP</span></div>
 
+      </div>
+      <div id="right-line"></div>
+      <div id="bottom-line"></div>
+      <div id="left-line"></div>
+      <div id="top-line"></div>
       <canvas id="webgl"></canvas>
       <div id=card>
         <img width="60%" height="auto" id="card-img" src="data/img/cover.png">
@@ -231,6 +311,14 @@
           <p>Around Us is a project by <a target="_blank" href="https://expandingexperience.kr/">Jaekook Han</a> and <a target="_blank" href="http://jiwonshin.com/">Jiwon Shin</a>.</p>
           <p>Data from <a target="_blank" href="https://www.ucsusa.org/resources/satellite-database">Union of Concerned Scientists</a> and visualization created with <a target="_blank" href="https://threejs.org/">Three.js</a>.</p>
       </div>
+      <div id="p5-cvs"></div>
+      <div id="map-info">
+          <div id="map-index"></div>
+          <div id="map-div"></div>
+          <div id="map-num"></div>
+      </div>
+
+
       <script src="js/three.min.js"></script>
       <script src="js/three.interaction.js"></script>
       <script src="js/OrbitControls.js"></script>
@@ -245,8 +333,37 @@
         let satYears = [];
         let satYearCount = [];
 
+        let maps = [];
+        let countries = [
+            "Algeria", "Argentina", "Australia", "Austria", "Azerbaijan", "Bangladesh", "Belarus", "Belgium", "Bhutan", "Bolivia", "Brazil", "Bulgaria", "Canada", "Chile", "China_Brazil", "China_France", "China_Italy", "China", "Colombia", "Czech-Republic", "Denmark", "Egypt", "ESA_USA_Russia", "ESA_USA", "ESA", "Finland", "France_Belgium_Sweden", "France_Israel", "France_Italy_Belgium_Spain_Greece", "France_Italy", "France_USA", "France", "Germany", "Greece_United-Kingdom", "Greece", "India_Canada", "India_France", "India", "Indonesia", "Iran", "Iraq", "Israel", "Italy", "Japan_Singapore", "Japan", "Jordan", "Kazakhstan", "Laos", "Latvia", "Lithuania", "Luxembourg", "Malaysia", "Mexico", "Mongolia", "Morocco_Germany", "Morocco", "Netherlands", "Nigeria", "Norway", "Pakistan", "Peru", "Philippines", "Poland", "Qatar", "Russia_USA", "Russia", "Saudi-Arabia", "Singapore_Taiwan", "Singapore", "Slovakia", "South-Africa", "South-Korea", "Spain", "Sweden", "Switzerland", "Taiwan_USA", "Taiwan", "Thailand", "Turkey", "Turkmenistan_Monaco", "Ukraine", "United-Arab-Emirates", "United-Kingdom_ESA", "United-Kingdom", "Uruguay", "USA_Argentina", "USA_Canada_Japan", "USA_Canada", "USA_France", "USA_Germany", "USA_Japan_Brazil", "USA_Japan", "USA_United-Kingdom_Italy", "USA", "Venezuela", "Vietnam"
+        ];
+
+        let bounds = [];
+        let mids = [];
+        let midsOriginal = [];
+
         let textHeight;
         let squareWidth;
+
+        let imgHeight;
+        let redVal = 255;
+        let greenVal = 255;
+        let blueVal = 0;
+
+        let eye;
+        let ear;
+
+        let startMap = false;
+
+        function preload(){
+
+            eye = loadImage("data/img/eye.png");
+            ear = loadImage("data/img/ear.png");
+
+            for(let i = 0; i < countries.length; i++){
+                maps.push(loadImage("data/img/map_img/" + countries[i] + ".png"));
+            }
+        }
 
         function setup(){
             //
@@ -261,8 +378,235 @@
             //
             // console.log(titleWidth);
 
+            pixelDensity(1);
+
+            for(let i = 0; i < countries.length; i++){
+                countries[i] = countries[i].replace("-", " ");
+                countries[i] = countries[i].replace("-", " ");
+                countries[i] = countries[i].replace("_", "/");
+                countries[i] = countries[i].replace("_", "/");
+                countries[i] = countries[i].replace("_", "/");
+                countries[i] = countries[i].replace("_", "/");
+
+                if(countries[i].indexOf("/") < 0){
+                    let newCountry = document.createElement('div');
+                    newCountry.innerHTML = countries[i];
+
+                   // newCountry.id = countries[i];
+                    newCountry.className = "map-list";
+
+                    document.getElementById('map-index').appendChild(newCountry);
+
+                    let newNum = document.createElement('div');
+                    newNum.innerHTML = "0";
+                    newNum.id = countries[i];
+                    newNum.className = "map-list";
+                    document.getElementById('map-num').appendChild(newNum);
+                }
+            }
+
             loadTable('data/sat.csv', parseData);
-            noCanvas();
+            let canvas = createCanvas(windowWidth, windowHeight);
+            canvas.id("map-cvs");
+            canvas.parent('p5-cvs');
+
+            imgHeight = width * 0.7 / 574 * 332;
+
+            for(let i = 0; i < maps.length; i++){
+                maps[i].loadPixels();
+                let pix = maps[i].pixels;
+
+                let minX = maps[i].width;
+                let maxX = 0;
+
+                let minY = maps[i].height;
+                let maxY = 0;
+
+                for(let y = 0; y < maps[i].height; y++){
+                    for(let x = 0; x < maps[i].width; x++){
+                        let index = (y * maps[i].width + x) * 4;
+
+                        if(pix[index] != 0){
+                            if(x < minX){
+                                minX = x;
+                            }
+
+                            if(x > maxX){
+                                maxX = x;
+                            }
+
+                            if(y < minY){
+                                minY = y;
+                            }
+
+                            if(y > maxY){
+                                maxY = y;
+                            }
+
+                            pix[index] = 180;
+                            pix[index + 1] = 180;
+                            pix[index + 2] = 180;
+                            pix[index + 3] = 50;
+                        }
+                    }
+                }
+
+                maps[i].updatePixels();
+
+                bounds.push([minX, maxX, minY, maxY]);
+
+                if(i === countries.length - 3){
+                    mids.push([(maxX + minX) / 2 + 30, (maxY + minY) / 2 + 35]);
+
+                }else{
+                    mids.push([(maxX + minX) / 2, (maxY + minY) / 2]);
+                }
+
+                // let mappedMinX = map(minX, 0, maps[i].width, 0, width);
+                // let mappedMaxX = map(maxX, 0, maps[i].width, 0, width);
+                // let mappedMinY = map(minY, 0, maps[i].height, 0, imgHeight);
+                // let mappedMaxY = map(maxY, 0, maps[i].height, 0, imgHeight);
+                //
+                // bounds.push([mappedMinX, mappedMaxX, mappedMinY, mappedMaxY]);
+            }
+
+            midsOriginal = mids;
+        }
+
+        let mapIndex = 0;
+        let satObjects = [];
+
+        function draw(){
+            background(0);
+
+            for(let i = 0; i < maps.length; i++){
+                image(maps[i], width * 0.15, (height - imgHeight) / 2, width * 0.7, imgHeight);
+            }
+            // filter(BLUR, 2);
+
+            for(let i = 0; i < satObjects.length; i++){
+                satObjects[i].display();
+            }
+
+            if(startMap){
+
+                if(frameCount % 2 === 0){
+
+                    //do pix stuff here
+                    if(satdata[mapIndex]){
+                        let allCountries = satdata[mapIndex][6].split("/");
+
+                        for(let i = 0; i < allCountries.length; i++){
+                            let thisCountry = allCountries[i];
+
+                            if(countries.indexOf(thisCountry) < countries.length && countries.indexOf(thisCountry) >= 0){
+
+                                if(document.getElementById(thisCountry)){
+                                    let currentNum = parseInt(document.getElementById(thisCountry).innerHTML);
+                                    currentNum++;
+                                    document.getElementById(thisCountry).innerHTML = currentNum;
+                                }
+
+                                let cIndex = countries.indexOf(thisCountry);
+                                maps[cIndex].loadPixels();
+                                let pix = maps[cIndex].pixels;
+
+                                let box = bounds[cIndex];
+
+                                let midX = mids[cIndex][0];
+                                let midY = mids[cIndex][1];
+
+                                // let randX = int(random(box[0], box[1]));
+                                // let randY = int(random(box[2], box[3]));
+                                //
+                                //
+                                // let randIndex = (randY * maps[cIndex].width + randX) * 4;
+                                //
+                                // while(pix[randIndex] === 0){
+                                //     randX = int(random(box[0], box[1]));
+                                //     randY = int(random(box[2], box[3]));
+                                //
+                                //     randIndex = (randY * maps[cIndex].width + randX) * 4;
+                                // }
+
+                                if(satdata[mapIndex][9].indexOf("Communications") >= 0){
+                                    satObjects.push(new SatObj(0, midX, midY));
+                                }else{
+                                    satObjects.push(new SatObj(1, midX, midY));
+                                }
+
+                                mids[cIndex][0] += 0.5;
+                                mids[cIndex][1] -= 0.5;
+
+                                //bounds.push([mappedMinX, mappedMaxX, mappedMinY, mappedMaxY]);
+
+                                for(let y = bounds[cIndex][2]; y < bounds[cIndex][3]; y++){
+                                    for(let x = bounds[cIndex][0]; x < bounds[cIndex][1]; x++){
+                                        let index = (y * maps[cIndex].width + x) * 4;
+
+                                        if(pix[index] != 0){
+
+                                            if(pix[index + 3] == 50){
+                                                pix[index] = redVal;
+                                                pix[index + 1] = greenVal;
+                                                pix[index + 2] = blueVal;
+                                            }
+
+                                            if(pix[index + 3] < 255){
+                                                pix[index + 3] += 1;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                maps[cIndex].updatePixels();
+                            }else{
+                                console.log(thisCountry + " not drawn");
+                            }
+
+                        }
+
+                        mapIndex++;
+
+                        if(mapIndex > satdata.length - 1) {
+                            console.log("DONE");
+                            startMap = false;
+                        }
+                    }
+
+                }
+            }
+            //
+            // fill(255, 30);
+            // rect(bounds[0][0], bounds[0][2], bounds[0][1] - bounds[0][0], bounds[0][3] - bounds[0][2]);
+        }
+
+        class SatObj{
+            constructor(type, x, y){
+                if(type === 0){
+                    this.img = eye;
+                }else{
+                    this.img = ear;
+                }
+
+                this.x = map(x, 0, maps[0].width, width * 0.15, width * 0.85);
+                this.y = map(y, 0, maps[0].height, (height - imgHeight) / 2, imgHeight + (height - imgHeight) / 2);
+
+                this.angle = radians(15);
+            }
+
+            display(){
+                push();
+                imageMode(CENTER);
+                translate(this.x, this.y);
+                rotate(this.angle);
+                stroke(0);
+                strokeWeight(0.2);
+                fill(255, 120);
+                rect(0, 0, 10, 10);
+                //image(this.img, 0, 0);
+                pop();
+            }
         }
 
         function parseData(dat){
@@ -375,6 +719,7 @@
         function home(){
 
 
+
             document.getElementById('card').style.display = "none";
 
             clearInterval(addSat);
@@ -391,6 +736,7 @@
             satIndex = 0;
             yearTransDone = false;
 
+
             if(times){
                 for(let i = 0; i < times.length; i++){
                     times[i].children[1].style.visibility = "hidden";
@@ -402,8 +748,6 @@
             console.log("start back");
 
             let yearsTrans = setInterval(function(){
-
-
 
                 if(yearsAlpha > 0){
                     yearsAlpha -= 0.1;
@@ -494,7 +838,7 @@
                 }
 
 
-            }, 50);
+            }, 20);
 
 
 
@@ -504,6 +848,12 @@
 
         function info(){
 
+            startMap = false;
+
+            // mapIndex = 0;
+            // satObjects = [];
+            //
+            // mids = midsOriginal;
 
             document.getElementById('card').style.display = "none";
 
@@ -533,9 +883,36 @@
 
             let yearsTrans = setInterval(function(){
 
+                let topSize = parseInt(window.getComputedStyle(document.getElementById('map-cvs')).top);
+                let alpha = parseFloat(window.getComputedStyle(document.getElementById('map-cvs')).opacity);
+
+
                 if(yearsAlpha > 0){
                     yearsAlpha -= 0.1;
                     document.getElementById('by-years').style.opacity = yearsAlpha;
+
+                    homeTransDone = false;
+                }else{
+                    homeTransDone = true;
+                }
+
+
+                if(topSize < window.innerHeight){
+                    topSize += 20;
+
+                    document.getElementById('map-cvs').style.top = topSize + "px";
+
+                    homeTransDone = false;
+                }else{
+                    homeTransDone = true;
+                }
+
+
+                if(alpha > 0){
+                    alpha -= 0.01;
+
+                    document.getElementById('map-cvs').style.opacity = alpha;
+                    document.getElementById('map-info').style.opacity = alpha;
 
                     homeTransDone = false;
                 }else{
@@ -600,6 +977,8 @@
                     // }
                 }
 
+
+
                 if(homeTransDone){
                     console.log("stop interval");
                     clearInterval(yearsTrans);
@@ -614,8 +993,6 @@
 
                     let showInfo = setInterval(function(){
 
-
-
                         if(infoOpacity < 1){
                             infoOpacity += 0.1;
                             document.getElementById('info-panel').style.opacity = infoOpacity;
@@ -623,14 +1000,12 @@
                             clearInterval(showInfo);
                         }
 
-
-
                     }, 50);
 
                 }
 
 
-            }, 50);
+            }, 40);
 
 
         }
@@ -642,6 +1017,8 @@
         function viewCards(){
 
             mode = 1;
+
+            startMap = false;
 
             console.log("cards start back");
 
@@ -670,6 +1047,10 @@
             let yearsTrans = setInterval(function(){
 
 
+                let topSize = parseInt(window.getComputedStyle(document.getElementById('map-cvs')).top);
+                let alpha = parseFloat(window.getComputedStyle(document.getElementById('map-cvs')).opacity);
+
+
                 if(infoOpacity > 0){
                     infoOpacity -= 0.1;
                     document.getElementById('info-panel').style.opacity = infoOpacity;
@@ -690,6 +1071,28 @@
                     cardsTransDone = true;
                 }
 
+                if(topSize < window.innerHeight){
+                    topSize += 25;
+
+                    document.getElementById('map-cvs').style.top = topSize + "px";
+
+                    cardsTransDone = false;
+                }else{
+                  //  cardsTransDone = true;
+                }
+
+
+                if(alpha > 0){
+                    alpha -= 0.01;
+
+                    document.getElementById('map-cvs').style.opacity = alpha;
+                    document.getElementById('map-info').style.opacity = alpha;
+
+                    cardsTransDone = false;
+                }else{
+                  //  cardsTransDone = true;
+                }
+
                 if(camera.position.x > -20){
                     camera.position.x -= 1;
                     cardsTransDone = false;
@@ -697,7 +1100,7 @@
                 }else{
                     camera.position.x = -20;
 
-                    cardsTransDone = true;
+                   // cardsTransDone = true;
                 }
 
                 if(earth.position.x > -60){
@@ -707,8 +1110,9 @@
                 }else{
                     earth.position.x = -60;
 
-                    cardsTransDone = true;
+                   // cardsTransDone = true;
                 }
+
 
 
 
@@ -752,12 +1156,59 @@
 
         }
 
+        let mapTransDone = false;
+
+        function showmap(){
+           home();
+
+            console.log("in map");
+
+            let moveMap = setInterval(function(){
+
+                let topSize = parseInt(window.getComputedStyle(document.getElementById('map-cvs')).top);
+                let alpha = parseFloat(window.getComputedStyle(document.getElementById('map-cvs')).opacity);
+
+                if(topSize > 0){
+                    topSize -= 10;
+
+                    document.getElementById('map-cvs').style.top = topSize + "px";
+
+                    mapTransDone = false;
+                }else{
+                    mapTransDone = true;
+                }
+
+
+                if(alpha < 1){
+                    alpha += 0.01;
+
+                    document.getElementById('map-cvs').style.opacity = alpha;
+                    document.getElementById('map-info').style.opacity = alpha;
+
+
+                    mapTransDone = false;
+                }else{
+                    mapTransDone = true;
+                }
+
+                if(mapTransDone){
+                    clearInterval(moveMap);
+
+                    startMap = true;
+                    mapTransDone = false;
+                }
+            }, 20);
+        }
+
         let timer;
         let times;
 
         function satByYears(){
 
             mode = 2;
+
+            startMap = false;
+
 
             clearInterval(addSat);
 
@@ -780,7 +1231,8 @@
 
             let trans = setInterval(function(){
 
-
+                let topSize = parseInt(window.getComputedStyle(document.getElementById('map-cvs')).top);
+                let alpha = parseFloat(window.getComputedStyle(document.getElementById('map-cvs')).opacity);
 
                 yearsAlpha += 0.01;
                 document.getElementById('by-years').style.opacity = yearsAlpha;
@@ -802,6 +1254,29 @@
 
                 }
 
+                if(topSize < window.innerHeight){
+                    topSize += 10;
+
+                    document.getElementById('map-cvs').style.top = topSize + "px";
+
+                    cardsTransDone = false;
+                }else{
+                    cardsTransDone = true;
+                }
+
+
+                if(alpha > 0){
+                    alpha -= 0.01;
+
+                    document.getElementById('map-cvs').style.opacity = alpha;
+                    document.getElementById('map-info').style.opacity = alpha;
+
+
+                    cardsTransDone = false;
+                }else{
+                    cardsTransDone = true;
+                }
+
                 if(camera.position.x < 10){
                     camera.position.x += 0.1;
                     yearTransDone = false;
@@ -817,6 +1292,8 @@
                 }else{
                     yearTransDone = true;
                 }
+
+
 
                 if(yearTransDone){
                     clearInterval(trans);
@@ -964,7 +1441,7 @@
         scene.fog = new THREE.Fog(0x000000, 0, 400);
 
         let earthMaterial = new THREE.MeshPhongMaterial({});
-        earthMaterial.map = THREE.ImageUtils.loadTexture('data/img/earthmap.jpg');
+        earthMaterial.map = THREE.ImageUtils.loadTexture('data/img/earthmap4k.jpg');
 
         let earth = new THREE.Mesh(
             new THREE.SphereGeometry(35, 32, 32),
@@ -1124,7 +1601,6 @@
           camera.updateProjectionMatrix();
           renderer.setSize(window.innerWidth, window.innerHeight);
         }
-
 
 
       </script>

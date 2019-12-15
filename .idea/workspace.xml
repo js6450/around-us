@@ -16,12 +16,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="438">
-              <caret line="351" column="76" selection-start-line="351" selection-start-column="76" selection-end-line="351" selection-end-column="76" />
+            <state relative-caret-position="319">
+              <caret line="502" column="96" selection-start-line="502" selection-start-column="96" selection-end-line="502" selection-end-column="96" />
             </state>
           </provider>
         </entry>
@@ -70,13 +70,18 @@
       <find>years</find>
       <find>selected</find>
       <find>applyNoise</find>
-      <find>earth</find>
       <find>opacity</find>
-      <find>year</find>
       <find>timeline</find>
       <find>info</find>
       <find>xorigin</find>
       <find>createSat</find>
+      <find>earth</find>
+      <find>map</find>
+      <find>world map</find>
+      <find>function map</find>
+      <find>map-cvs</find>
+      <find>year</find>
+      <find>satByYears</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -104,10 +109,10 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="674" />
-    <option name="y" value="23" />
-    <option name="width" value="1006" />
-    <option name="height" value="1027" />
+    <option name="x" value="768" />
+    <option name="y" value="78" />
+    <option name="width" value="840" />
+    <option name="height" value="1003" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -167,34 +172,35 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1575922762878</updated>
-      <workItem from="1575922764151" duration="40788000" />
+      <workItem from="1575922764151" duration="42136000" />
+      <workItem from="1576179975098" duration="15449000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="40788000" />
+    <option name="totallyTimeSpent" value="57585000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="674" y="23" width="1006" height="1027" extended-state="0" />
+    <frame x="768" y="78" width="840" height="1003" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49892473" weight="0.24824561" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info id="Structure" order="1" sideWeight="0.50107527" side_tool="true" weight="0.24824561" />
-      <window_info anchor="bottom" id="Terminal" weight="0.19139785" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.19139785" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -205,10 +211,31 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="3" />
+      <option name="time" value="4" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="14490">
+          <caret line="966" column="77" selection-start-line="966" selection-start-column="77" selection-end-line="966" selection-end-column="77" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="4" selection-start-column="4" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/Particle.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="26" selection-start-line="26" selection-end-line="26" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/js/Particle.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
@@ -225,8 +252,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="438">
-          <caret line="351" column="76" selection-start-line="351" selection-start-column="76" selection-end-line="351" selection-end-column="76" />
+        <state relative-caret-position="319">
+          <caret line="502" column="96" selection-start-line="502" selection-start-column="96" selection-end-line="502" selection-end-column="96" />
         </state>
       </provider>
     </entry>
